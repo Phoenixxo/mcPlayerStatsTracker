@@ -113,8 +113,3 @@ buildNumber.properties
 run/
 
 # BuildTools
-BuildTools/
-BuildTools/BuildData/
-BuildTools/Bukkit/
-BuildTools/CraftBukkit/
-BuildTools/Spigot/
