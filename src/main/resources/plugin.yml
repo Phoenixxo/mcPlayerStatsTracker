@@ -1,0 +1,4 @@
+name: mcPlayerStatsTracker
+version: '1.0-SNAPSHOT'
+main: mcpst.mcPlayerStatsTracker.McPlayerStatsTracker
+api-version: '1.21'
