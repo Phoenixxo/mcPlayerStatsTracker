@@ -40,8 +40,8 @@
                         </goals>
                         <configuration>
                             <outputFile>
-                                ./testServer/plugins
-                            </outputFile>
+                                ./testServer/plugins/mcPlayerStatsTracker.jar
+                            </outputFile>ˆ
                         </configuration>
                     </execution>
                 </executions>
