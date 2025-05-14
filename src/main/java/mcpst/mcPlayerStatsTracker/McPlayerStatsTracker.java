@@ -1,5 +1,6 @@
 package mcpst.mcPlayerStatsTracker;
 
+import mcpst.mcPlayerStatsTracker.handlers.BlocksBrokenHandler;
 import mcpst.mcPlayerStatsTracker.handlers.KDListener;
 import mcpst.mcPlayerStatsTracker.handlers.PlayerLog;
 import org.bukkit.Bukkit;
@@ -12,8 +13,10 @@ public final class McPlayerStatsTracker extends JavaPlugin {
         // Plugin startup logic
         Bukkit.getLogger().info("Player Logger started.");
         Bukkit.getLogger().info("KD Listener started.");
+        Bukkit.getLogger().info("Block Breaker started");
         new PlayerLog(this);
         new KDListener(this);
+        new BlocksBrokenHandler(this);
     }
 
     @Override
