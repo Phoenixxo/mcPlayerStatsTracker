@@ -9,6 +9,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 
+/*
+TODO:
+    - Redo class to log times to database of logins and logouts
+ */
 public class PlayerLog implements Listener {
 
     static HashMap<String, Integer> playerLogins = new HashMap<>();

@@ -1,6 +1,7 @@
 package mcpst.mcPlayerStatsTracker.handlers;
 
 import mcpst.mcPlayerStatsTracker.McPlayerStatsTracker;
+import mcpst.mcPlayerStatsTracker.StatApiClient;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,5 +26,6 @@ public class BlocksBrokenHandler implements Listener {
             blocksBroken.put(playerName, 1);
         }
         Bukkit.getLogger().info(playerName + " has broken " + event.getBlock().getType().name());
+        StatApiClient.incrementBlockBreak(playerName);
     }
 }
