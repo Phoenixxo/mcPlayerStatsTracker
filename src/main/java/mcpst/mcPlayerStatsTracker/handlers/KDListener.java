@@ -22,8 +22,10 @@ public class KDListener implements Listener {
         Player deadPlayer = event.getEntity();
             if (killer != null) {
                 StatApiClient.incrementKills(killer.getName());
+                StatApiClient.logEvent(killer.getName(), "Kill");
             }
             StatApiClient.incrementDeaths(deadPlayer.getName());
+            StatApiClient.logEvent(deadPlayer.getName(), "Death");
     }
 
 }
