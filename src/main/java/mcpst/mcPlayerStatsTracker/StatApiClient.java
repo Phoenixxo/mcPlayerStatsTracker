@@ -1,40 +1,35 @@
 package mcpst.mcPlayerStatsTracker;
 
 import org.bukkit.Bukkit;
-import java.io.IOException;
-import java.io.OutputStream;
+
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
+@SuppressWarnings("UnstableApiUsage")
 public class StatApiClient {
 
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
     // TODO: Remake method to log events (player logging, etc.)
-    public static void logger(String playerName, int kills, int deaths) {
+
+    public static void logEvent(String playerName, String eventType) {
         try {
-            URL url = new URL("http://localhost:8080/api/stats");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setDoOutput(true);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI("http://localhost:8080/api/logs"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(
+                            String.format("{\"playerName\":\"%s\",\"eventType\":\"%s\"}", playerName, eventType)
+                    ))
+                    .build();
 
-            String jsonInput = String.format(
-                    "{\"playerName\":\"%s\", \"kills\":%d, \"deaths\":%d}",
-                    playerName, kills, deaths
-            );
+            HTTP_CLIENT.sendAsync(request, HttpResponse.BodyHandlers.discarding())
+                    .thenAccept(response -> Bukkit.getLogger().info("[Logger] " + eventType + " for " + playerName + " logged. Response: " + response.statusCode()));
 
-            try (OutputStream os = connection.getOutputStream()) {
-                os.write(jsonInput.getBytes("utf-8"));
-            }
-
-            int responseCode = connection.getResponseCode();
-            System.out.println("API response code: " + responseCode);
-
-        } catch (IOException e) {
+        } catch (Exception e) {
+            Bukkit.getLogger().severe("Failed to log event: " + e.getMessage());
             e.printStackTrace();
         }
     }
