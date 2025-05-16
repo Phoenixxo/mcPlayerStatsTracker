@@ -2,7 +2,7 @@
 
 This is a custom Minecraft plugin that tracks player statistics and sends them to a REST API for storage and analysis.
 
-> This API is built to work with the following Minecraft server plugin:
+> This plugin is built to work with the following api:
 👉 [mcplayer-stats-api](https://github.com/Phoenixxo/mcplayer-stats-api)
 
 ## Features
