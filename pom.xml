@@ -24,8 +24,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -34,15 +33,13 @@
                 <version>3.5.3</version>
                 <executions>
                     <execution>
+                        <configuration>
+
+                        </configuration>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <outputFile>
-                                ./testServer/plugins/mcPlayerStatsTracker.jar
-                            </outputFile>ˆ
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
