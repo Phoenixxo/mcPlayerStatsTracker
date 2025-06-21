@@ -2,3 +2,7 @@ name: mcPlayerStatsTracker
 version: '1.0-SNAPSHOT'
 main: mcpst.mcPlayerStatsTracker.McPlayerStatsTracker
 api-version: '1.21'
+
+commands:
+  mystats:
+    description: View your player stats.

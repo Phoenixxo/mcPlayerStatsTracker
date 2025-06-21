@@ -1,19 +1,52 @@
 package mcpst.mcPlayerStatsTracker;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import mcpst.mcPlayerStatsTracker.models.PlayerStats;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Consumer;
 
 @SuppressWarnings("UnstableApiUsage")
 public class StatApiClient {
 
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
-    // TODO: Remake method to log events (player logging, etc.)
+
+    public static void getStats(String playerName, Consumer<PlayerStats> callback) {
+        try {
+            URI uri = new URI("http://localhost:8080/api/stats/" + playerName);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .GET()
+                    .build();
+
+            HTTP_CLIENT.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(response -> {
+                        if (response.statusCode() == 200) {
+                            JsonObject obj = JsonParser.parseString(response.body()).getAsJsonObject();
+                            PlayerStats stats = new PlayerStats();
+                            stats.kills = obj.get("kills").getAsInt();
+                            stats.deaths = obj.get("deaths").getAsInt();
+                            stats.blocksBroken = obj.get("blocksBroken").getAsInt();
+
+                            Bukkit.getScheduler().runTask(JavaPlugin.getProvidingPlugin(StatApiClient.class), () -> {
+                                callback.accept(stats);
+                            });
+                        } else {
+                            Bukkit.getLogger().warning("Failed to fetch stats for " + playerName);
+                          }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void logEvent(String playerName, String eventType) {
         try {

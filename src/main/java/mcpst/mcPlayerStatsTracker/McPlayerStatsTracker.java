@@ -1,5 +1,6 @@
 package mcpst.mcPlayerStatsTracker;
 
+import mcpst.mcPlayerStatsTracker.commands.myStatsCommand;
 import mcpst.mcPlayerStatsTracker.handlers.BlocksBrokenHandler;
 import mcpst.mcPlayerStatsTracker.handlers.KDListener;
 import mcpst.mcPlayerStatsTracker.handlers.PlayerLog;
@@ -17,6 +18,7 @@ public final class McPlayerStatsTracker extends JavaPlugin {
         new PlayerLog(this);
         new KDListener(this);
         new BlocksBrokenHandler(this);
+        this.getCommand("mystats").setExecutor(new myStatsCommand());
     }
 
     @Override
